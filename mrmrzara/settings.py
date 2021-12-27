@@ -1,7 +1,14 @@
-from pathlib     import Path
-from my_settings import SECRET_KEY, DATABASES
+# python built-in module
+from pathlib import Path
+
+# 외부 module
+import pymysql
 from django.utils import timezone
 
+# 사용자 module (직접 작성한 module)
+from my_settings import SECRET_KEY, DATABASES
+
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
