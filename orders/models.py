@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 from products.models import ProductOption
@@ -9,12 +11,11 @@ class OrderStatus(models.Model):
     class Meta:
         db_table = 'orders_status'
     
-    
 class Order(models.Model):
-    order_number = models.CharField(max_length=20)
-    user_id      = models.ForeignKey(User, on_delete=models.CASCADE)
-    order_status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
-    address      = models.CharField(max_length=100)
+    order_number    = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+    user_id         = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_status_id = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
+    address         = models.CharField(max_length=100)
     
     class Meta:
         db_table = 'orders'
