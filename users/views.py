@@ -29,7 +29,7 @@ class UserSignUpView(View):
                 password = hashed_password,
                 name     = data['name'],
             )
-            return JsonResponse({'result': 'CREATED'}, status=201)     
+            return JsonResponse({'result': 'CREATED'}, status=201)   
         except KeyError:
             return JsonResponse({'message': 'KEYERROR'}, status=400)
         except JSONDecodeError:

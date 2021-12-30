@@ -5,5 +5,5 @@ def validate_email(email):
     return re.match(regex_email, email)
 
 def validate_password(password):
-    regex_password = r'([\w!@#$%^&*(),.?\":{}|<>]+){8}'
+    regex_password = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}"
     return re.match(regex_password, password)
