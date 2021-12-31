@@ -5,10 +5,10 @@ from json.decoder import JSONDecodeError
 
 from django.views import View
 from django.http  import JsonResponse
-from my_settings import SECRET_KEY, algorithm
 
-from users.validators import validate_email, validate_password
-from users.models     import User
+from mrmrzara.settings import SECRET_KEY, algorithm
+from users.validators  import validate_email, validate_password
+from users.models      import User
 
 class UserSignUpView(View):
     def post(self, request):
