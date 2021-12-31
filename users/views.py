@@ -6,7 +6,7 @@ from json.decoder import JSONDecodeError
 from django.views import View
 from django.http  import JsonResponse
 
-from mrmrzara.settings import SECRET_KEY, algorithm
+from mrmrzara.settings import SECRET_KEY, ALGORITHM
 from users.validators  import validate_email, validate_password
 from users.models      import User
 
@@ -14,6 +14,7 @@ class UserSignUpView(View):
     def post(self, request):
         try:
             data = json.loads(request.body)
+            
             if not validate_email(data['email']):
                 return JsonResponse({'message': 'INVALID_EMAIL'}, status=400)
             
@@ -39,14 +40,16 @@ class UserLogInView(View):
     def post(self, request):
         try:
             data = json.loads(request.body)
+            
             if not User.objects.get(email=data['email']):
                 return JsonResponse({'message': 'INVALID_USER'}, status=400)    
             
             user = User.objects.get(email=data['email'])
+            
             if not bcrypt.checkpw(data['password'].encode('utf-8'), user.password.encode('utf-8')):
                 return JsonResponse({'message': 'INVALID_USER'}, status=400)
             
-            token = jwt.encode({'user-id': user.id}, SECRET_KEY, algorithm=algorithm)
+            token  = jwt.encode({'user-id': user.id}, SECRET_KEY, ALGORITHM=ALGORITHM)
             result = {
                 'token' : token
             }

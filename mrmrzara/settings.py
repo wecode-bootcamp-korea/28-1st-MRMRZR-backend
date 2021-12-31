@@ -6,7 +6,7 @@ import pymysql
 from django.utils import timezone
 
 # 사용자 module (직접 작성한 module)
-from my_settings import SECRET_KEY, DATABASES, algorithm
+from my_settings import SECRET_KEY, DATABASES, ALGORITHM
 
 pymysql.install_as_MySQLdb()
 
@@ -149,4 +149,4 @@ CORS_ALLOW_HEADERS = (
 
 APPEND_SLASH = False
 
-algorithm = algorithm
+ALGORITHM = ALGORITHM
