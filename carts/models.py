@@ -6,7 +6,7 @@ from users.models    import User
 
 class Cart(models.Model):
     user_id          = models.OneToOneField(User, on_delete=models.CASCADE)
-    products_options = models.ForeignKey(ProductOption, on_delete=models.CASCADE)
+    products_options = models.ForeignKey(ProductOption, on_delete=models.CASCADE, db_constraint=False)
     quantity         = models.IntegerField()
 
     class Meta:
