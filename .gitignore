@@ -365,3 +365,6 @@ my_settings.py
 
 mrmrzara-DB/
 db_uploader.py
+
+csv/
+uploader.py

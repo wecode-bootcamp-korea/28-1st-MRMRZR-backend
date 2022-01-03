@@ -4,3 +4,6 @@ mysqlclient==2.1.0
 
 # m1의 경우 아래 패키지도 추가해주세요.
 PyMySQL==1.0.2
+
+bcrypt==3.2.0
+PyJWT==2.3.0
