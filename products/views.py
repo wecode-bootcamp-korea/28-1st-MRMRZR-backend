@@ -16,7 +16,7 @@ class ProductListView(View):
                 return JsonResponse({'message' : 'PRODUCT DOES NOT EXIST'}, status=404)
             
             product = Product.objects.get(id = product_id)
-            image = ProductImage.objects.get(product_id_id = product_id)
+            image = ProductImage.objects.get(product_id = product_id)
 
             result = {
                 'id'        : product.id,
