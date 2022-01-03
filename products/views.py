@@ -6,106 +6,36 @@ from django.db.models.query_utils   import Q
 
 from products.models import Category, Item, Product, Size, ProductImage, ProductOption
 
+
+
+# 이름, 가격, imgurl, size,
 class ProductListView(View):
     def get(self, request):
-        category     = request.GET.get('category', None)
-        item          = request.GET.get('item', None)
-        product       = request.GET.get('product', None)
-        size          = request.GET.get('size', None)
-        productimages  = request.GET.get('productimage', None)
-        productoptions = request.GET.get('productoption', None)
+        try:
+            if not Product.objects.filter(id = product_id).exsists():
+                return JsonResponse({'message' : 'PRODUCT DOES NOT EXIST'}, status=404)
+            
+            product = Product.objects.get(id = product_id)
+            image = ProductImage.objects.get(product_id_id = product_id)
 
-        q = Q()
-
-        if category:
-            q &= Q(item__category__name=category)
-
-        if item:
-            q &= Q(item__name=item)
-
-        # if pick:
-        #     q &= Q(item__category__name=pick)
-
-        products = Product.objects.filter(q)
-
-        # if new:
-        #     products = products.order_by('-created_at')[:4]
-
-        result = [{
-                    'id'           : product.id,
-                    'name'         : product.name,
-                    'description'  : product.description,
-                    # 'price'        : int(product.get_price()
-                    # 'image_url'    : [product_image.image_url for product_image in product.productimage_set.all()],
-        } for product in products]
-        return JsonResponse({'result': result}, status=200)
-        # if category:
-        #     q &= Q()
+            result = {
+                'id'        : product.id,
+                'name'      : product.name,
+                'price'     : product.price,
+                'is_new'    : product.is_new,
+                'image_url' : image.url
+            }
+            
+            return JsonResponse({"results" : results}, status = 200)
 
 
+# sort = request.GET.get('sort')
+# ...
 
-# class ProductDetailView(View):
-#     def get(self, request):
-#         try:
-#             products = Product.objects.filter(items__id = item_id)
-#             item = Item.objects.get(id = item_id)
+# sort_set = {
+#     'price_ascending'  : 'price',
+#     'price_descending' : '-price',
+# }
+# ...
 
-#             result = [{
-                
-#             }]
-
-
-
-
-
-
-
-        # categories     = Category.objects.all()
-        # items          = Item.objects.all()
-        # products       = Product.objects.all()
-        # sizes          = Size.objects.all()
-        # productimages  = ProductImage.objects.all()
-        # productoptions = ProductOption.objects.all()
-        # result         = []
-
-        # for category in categories:
-        #     result.append(
-        #         {
-        #             "category_name" : category.name
-        #         }
-        #     )
-        # for item in items:
-        #     result.append(
-        #         {
-        #             "item_name" : item.name
-        #         }
-        #     )
-        # for product in products:
-        #     result.append(
-        #         {
-        #             "product_name"             : product.name,
-        #             "product_number"      : product.product_number,
-        #             "product_description" : product.description,
-        #             "product_price"       : product.price,
-        #             "product_is_new"      : product.is_new,
-        #         }
-        #     )
-        # for size in sizes:
-        #     result.append(
-        #         {
-        #             "size_name" : size.name
-        #         }
-        #     )
-        # for productimage in productimages:
-        #     result.append(
-        #         {
-        #             "productimage_url" : productimage.url
-        #         }
-        #     )
-        # for productoption in productoptions:
-        #     result.append(
-        #         {
-        #             "stock" : productoption.stock
-        #         }
-        #     )
-        # return JsonResponse ({"result" : result }, status=200)
+# ...filter(product_list).order_by(sort_set.get(sort, 'id'))
