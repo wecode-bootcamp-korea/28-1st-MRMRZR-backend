@@ -364,3 +364,4 @@ zsdoc/data
 my_settings.py
 
 mrmrzara-DB/
+db_uploader.py
