@@ -2,43 +2,46 @@ import json
 
 from django.http import JsonResponse
 from django.views import View
-from django.core.exceptions import ValidationError
-from django.core.exceptions import ObjectDoesNotExist
 
 from products.models import Category, Item, Product, Size, ProductImage, ProductOption
 
 class ProductDetailView(View):
     def get(self, request, product_id):
-        try:
-            if not Product.objects.filter(id = product_id).exists():
-                return JsonResponse({'message' : 'DOES NOT EXIST'}, status=404)
-            
-            product = Product.objects.get(id = product_id)
-            image = ProductImage.objects.get(product_id_id = product_id)
-            
-            #sizes = ProductOption.objects.filter(product_id_id = product_id)
-            #size = ProductOption.objects.filter(product_id_id = product_id)
-            #sizes = request.GET.get('size')
-            
-            result = {
-                'id'             : product.id,
-                'name'           : product.name,
-                'product_number' : product.product_number,
-                'description'    : product.description,
-                'price'          : product.price,
-                'is_new'         : product.is_new,
-                'image_url'      : image.url
-                #'size'           : Size 클래스 혹은 위에서 할당한 ProductOption 클래스?
-                #'image_url' : [product.image_url for product in image],
-            }               
-                
-            return JsonResponse({'results' : result}, status = 200)
+        if not Product.objects.filter(id = product_id).exists():
+            return JsonResponse({'message' : 'DOES NOT EXIST'}, status=404)
         
-        except Product.DoesNotExist:
-            return JsonResponse({'message' : 'NOT_FOUND'}, status=401)
+        product = Product.objects.get(id = product_id)
         
-        except KeyError:
-            return JsonResponse({'message' : 'KEY_ERROR'}, status=401)
+        # images = []
+
+        # for image in product.productimage_set.all():
+        #     images.append(image.url)
+
+        images = [image.url for image in product.productimage_set.all()]
+        
+        
+        sizes = []
+
+        for size in product.sizes.all():
+            sizes.append(
+                {
+                    'size_id'   : size.id,
+                    'size_name' : size.name
+                }
+            )
+        
+        result = {
+            'id'             : product.id,
+            'name'           : product.name,
+            'product_number' : product.product_number,
+            'description'    : product.description,
+            'price'          : product.price,
+            'is_new'         : product.is_new,
+            'image_urls'     : images,
+            'sizes'         : sizes
+        }               
+            
+        return JsonResponse({'results' : result}, status = 200)
         
         
             #image = ProductImage.objects.get(product_id = product_id) # 질문
