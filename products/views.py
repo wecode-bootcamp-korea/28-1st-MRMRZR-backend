@@ -14,6 +14,7 @@ class ProductDetailView(View):
                 return JsonResponse({'message' : 'DOES NOT EXIST'}, status=404)
             
             product = Product.objects.get(id = product_id)
+            image = ProductImage.objects.get(product_id_id = product_id)
             
             #sizes = ProductOption.objects.filter(product_id_id = product_id)
             #size = ProductOption.objects.filter(product_id_id = product_id)
@@ -26,8 +27,8 @@ class ProductDetailView(View):
                 'description'    : product.description,
                 'price'          : product.price,
                 'is_new'         : product.is_new,
+                'image_url'      : image.url
                 #'size'           : Size 클래스 혹은 위에서 할당한 ProductOption 클래스?
-                #'image_url' : image.image_url,
                 #'image_url' : [product.image_url for product in image],
             }               
                 

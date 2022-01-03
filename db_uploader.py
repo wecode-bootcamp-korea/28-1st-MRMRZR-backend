@@ -3,7 +3,7 @@ import os, django, csv, sys
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mrmrzara.settings")
 django.setup()
 
-from products.models import Category, Item, Product, ProductOption, Size
+from products.models import Category, Item, Product, ProductImage, ProductOption, Size
 
 CSV_PATH_PRODUCTS = '/Users/wonsukji/desktop/wecode/28-1st-MRMRZR-backend/mrmrzara-DB/products_DB.csv'
 
@@ -74,8 +74,28 @@ def options():
                     size_id = size_id,
                     stock = stock[i]
                 )
+
+CSV_PATH_PRODUCTS_IMG = '/Users/wonsukji/desktop/wecode/28-1st-MRMRZR-backend/mrmrzara-DB/images.csv'
+
+def images():
+    with open(CSV_PATH_PRODUCTS_IMG) as in_file:
+        data = csv.reader(in_file)
+        next(data, None)
+        for row in data:
+            if row[0]:
+                product_id = row[0]
+            
+            url = row[1].split(',')
+            product_id = Product.objects.get(id = product_id)
+            
+            for i in range(len(url)):
+                ProductImage.objects.create(
+                    product_id = product_id,
+                    url = url[i]
+                )
         
 #category()
 #item()
 #product()
-#options() 
+#options()
+#images()
