@@ -29,7 +29,7 @@ class ProductDetailView(View):
                 'is_new'         : product.is_new,
                 'image_url'      : image.url
                 #'size'           : Size 클래스 혹은 위에서 할당한 ProductOption 클래스?
-                #'image_url' : [product.image_url for product in image],
+                #'image_url' : [product.image_url for product in image] 이미지가 많아지면??? 꺼내오는 느낌?
             }               
                 
             return JsonResponse({'results' : result}, status = 200)
