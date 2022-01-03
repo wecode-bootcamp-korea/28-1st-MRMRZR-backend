@@ -53,3 +53,4 @@ class CartView(View):
 
     def get(self, request, product_id):
         user = User.objects.get(id=product_id)
+        
