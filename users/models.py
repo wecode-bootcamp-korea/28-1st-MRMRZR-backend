@@ -8,6 +8,10 @@ class User(models.Model):
     address    = models.CharField(max_length=300, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    information = models.ForeignKey('Userinformation', on_delete=)
     
     class Meta:
         db_table = 'users'
+
+class UserInformation(models.Models):
+    pass
