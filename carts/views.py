@@ -34,9 +34,7 @@ class CartView(View):
             cart.quantity = quantity
             cart.save()
             
-            return JsonResponse({'message': 'SUCCESS'}, status=201)
-                
-        # jsondecodeerror 수정    
+            return JsonResponse({'message': 'SUCCESS'}, status=201)   
         except KeyError:
             return JsonResponse({'message': 'KeyError'}, status=400)
         except JSONDecodeError:
