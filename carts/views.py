@@ -23,24 +23,27 @@ class CartView(View):
             if not Size.objects.filter(id=size.id).exists():
                 return JsonResponse({'message': 'INVALID_SIZE'}, status=400)
             
-            product_option = ProductOption.objects.filter(product_id=product, size_id=size)
-            print(product_option[0].stock)
-            print(quantity)
+            product_option = ProductOption.objects.get(product_id=product, size_id=size)
+            print(product_option)
             
-            if quantity < 1 or quantity > int(product_option[0].stock):
+            if quantity < 1 or quantity > int(product_option.stock):
                 return JsonResponse({'message': 'INVALID_QUANTITY'}, status=400)
 
-            if Cart.objects.filter(products_options=product_option).exists():       # get_or_create 참고 Product 테이블에 sizes라는 MTMF throug = ProductOption 
-                Cart.objects.create(
-                    products_options = product_option,
+            if Cart.objects.filter(products_options__in=product_option).exists():       # get_or_create 참고
+                cart = Cart.objects.create(
+                    user_id = user.id,
+                    products_options = product_option[0],
                     quantity = quantity,
                 )
-                return JsonResponse({'message': 'SUCESS ADD'}, status=201)
+                cart.quantity += quantity
+                cart.save()
+                return JsonResponse({'message': 'SUCESS_CART_TO_ADD'}, status=201)
+            
             else:
-                
+                print(user)
                 cart = Cart.objects.create(
-                    user_id = user,
-                    products_options = product_option[0],
+                    user_id = user.id,
+                    products_options = product_option,
                     quantity = quantity
                 )
                 print(cart.quantity)
@@ -51,6 +54,28 @@ class CartView(View):
         except User.DoesNotExist:
             return JsonResponse({'message': 'DoesNotExist'}, status=401)
 
-    def get(self, request, product_id):
-        user = User.objects.get(id=product_id)
-        
+    def get(self, request, user_id):
+        try:
+            user  = User.objects.get(pk=user_id)
+            carts = Cart.objects.filter(user_id=user.id)
+            result = []
+            for cart in carts:
+                option = cart.products_options.product
+                images = option.productimage_set.all()
+                
+                result.append(
+                    {
+                        'user_id'       : cart.user.id,
+                        'product_name'  : option.name,
+                        'product_number': option.product_number,
+                        'price'         : int(option.price),
+                        'size'          : cart.products_options.size.name,
+                        'image_url'     : [image.url for image in images],
+                        'quantity'      : cart.quantity
+                    }
+                )
+            return JsonResponse({'resutl': result}, status=200)
+        except User.DoesNotExist:
+            return JsonResponse({'message': 'User_DoesNotExist'}, status=404)
+        except Cart.DoesNotExist:
+            return JsonResponse({'message': 'Cart_DoesNotExist'}, status=404)
