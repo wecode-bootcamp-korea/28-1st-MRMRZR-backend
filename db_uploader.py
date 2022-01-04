@@ -25,8 +25,8 @@ def item():
             if row[0]:
                 category_name = row[0]
             item_name = row[1]
-            category_id = Category.objects.get(name = category_name)
-            Item.objects.create(name = item_name, category_id = category_id)
+            category = Category.objects.get(name = category_name)
+            Item.objects.create(name = item_name, category = category)
 
          
 def product():
@@ -42,7 +42,7 @@ def product():
             product_description = row[4].split(',')
             product_price = row[5].split(',')
             product_is_new = row[6].split(',')
-            product_item_id = Item.objects.get(name = item_name)
+            product_item = Item.objects.get(name = item_name)
                 
             for i in range(len(product_name)):
                 Product.objects.create(
@@ -51,7 +51,7 @@ def product():
                     description = product_description[i],
                     price = product_price[i],
                     is_new = product_is_new[i],
-                    item_id = product_item_id
+                    item = product_item
                 )
 
 CSV_PATH_PRODUCTS_OPT = '/Users/wonsukji/desktop/wecode/28-1st-MRMRZR-backend/mrmrzara-DB/options.csv'
@@ -63,15 +63,15 @@ def options():
         for row in data:
             if row[0]:
                 product_id = row[0]
-            
+                      
             size = row[1].split(',')
             stock = row[2].split(',')
             product_id = Product.objects.get(id = product_id)
             for i in range(len(size)):
                 size_id = Size.objects.get(name = size[i])
                 ProductOption.objects.create(
-                    product_id = product_id,
-                    size_id = size_id,
+                    product = product_id,
+                    size = size_id,
                     stock = stock[i]
                 )
 
@@ -83,14 +83,14 @@ def images():
         next(data, None)
         for row in data:
             if row[0]:
-                product_id = row[0]
+                product = row[0]
             
             url = row[1].split(',')
-            product_id = Product.objects.get(id = product_id)
+            product = Product.objects.get(id = product)
             
             for i in range(len(url)):
                 ProductImage.objects.create(
-                    product_id = product_id,
+                    product = product,
                     url = url[i]
                 )
         
