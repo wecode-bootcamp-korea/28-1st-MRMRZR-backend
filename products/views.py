@@ -11,9 +11,11 @@ from products.models import Category, Item, Product, Size, ProductImage, Product
 # 이름, 가격, imgurl, size,
 class ProductListView(View):
     def get(self, request):
-        products = Product.objects.filter()
-        images   = [image.url for image in product.productimage_set.all()]
-        sizes    = [size.name for size in product.productoption_set.all()]
+        #offset   = int(request.GET.get("offset", None))
+        #limit    = int(request.GET.get("limit", None))
+        products = Product.objects.all()
+        #images   = [image.url for image in products.productimage_set.all()]
+        #sizes    = [size.name for size in product.productoption_set.all()]
         order_condition = request.GET.get('order', None)
 
         if order_condition == 'price_ascending':
@@ -28,13 +30,10 @@ class ProductListView(View):
             'product_number': product.product_number,
             'price'         : product.price,
             'is_new'        : product.is_new,
-            'item'          : product.item,
-            "images"        : images,
-            "sizes"         : sizes,
-        } for product in products
+            "images"        : [image.url for image in product.productimage_set.all()],
+            "sizes"         : [size.name for size in product.productoption_set.all()]
+        } for product in products#[offset:limit]
         ]
-        
-        
         results = {
             'products' : products
         }
@@ -48,7 +47,11 @@ django queryset slicing
 & 
 django orderby
 
-14 filter 뒤 값들이 변경될것을 생각
+14 filter 뒤 값들이 변경될것을 생각?
+
+
+limit은 한번에 내보내주는 값들 (갯수)
+offset은 그것의 시작점
 
 
 
