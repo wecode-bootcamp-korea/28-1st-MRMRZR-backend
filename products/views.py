@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 import json
 
 from django.http  import JsonResponse
@@ -31,4 +29,42 @@ class ProductDetailView(View):
         }               
             
         return JsonResponse({'results' : result}, status = 200)
->>>>>>> main
+
+class ProductListView(View):
+    def get(self, request):
+        try:
+            category = request.GET.get('category', None)
+            item     = request.GET.get('item', None)
+            size     = request.GET.getlist('size', None)
+            sort     = request.GET.get('sort', "id")
+            offset   = int(request.GET.get('offset', 0))
+            limit    = int(request.GET.get('limit', 8))
+
+            q = Q(productoption__stock__gt=0)
+
+            if category:
+                q &= Q(item__category__name=category)
+
+            if item:
+                q &= Q(item__name=item)
+
+            if size:
+                q &= Q(sizes__in=size)
+
+            sort_set = {
+                "id"               : "id",
+                "price_ascending"  : "price",
+                "price_descending" : "-price"
+            }
+
+            results = [{
+                'product_id'    : product.id,
+                'name'          : product.name,
+                'product_number': product.product_number,
+                'price'         : int(product.price),
+                'is_new'        : product.is_new,
+                'item'          : product.item.name,
+                "image"         : [image.url for image in product.productimage_set.all()]
+            } for product in Product.objects.filter(q).distinct().order_by(sort_set[sort])[offset:offset+limit]
+            ]
+            return JsonResponse({"results" : results}, status = 200)
