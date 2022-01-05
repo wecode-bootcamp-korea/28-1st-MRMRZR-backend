@@ -9,7 +9,7 @@ from carts.models    import Cart
 from products.models import ProductOption
 
 class CartView(View):
-    @LogInDecorator()
+    @LogInDecorator
     def post(self, request):
         try:
             data       = json.loads(request.body)
@@ -40,7 +40,7 @@ class CartView(View):
         except JSONDecodeError:
             return JsonResponse({'message': 'JSONDecodeError'}, status=400)
 
-    @LogInDecorator()    
+    @LogInDecorator
     def get(self, request):
         user   = request.user
         carts  = Cart.objects.filter(user=user)
@@ -64,7 +64,7 @@ class CartView(View):
             )
         return JsonResponse({'resutl': result}, status=200)
 
-    @LogInDecorator()
+    @LogInDecorator
     def delete(self, request, cart_id):
         user = request.user
         cart = Cart.objects.get(pk=cart_id)
