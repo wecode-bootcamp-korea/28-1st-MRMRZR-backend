@@ -41,10 +41,9 @@ class CartView(View):
             return JsonResponse({'message': 'JSONDecodeError'}, status=400)
 
     # @login_decorator    
-    def get(self, request, user_id):
+    def get(self, request):
         user   = request.user
-        #user  = User.objects.get(pk=user_id)
-        carts  = Cart.objects.filter(user_id=user.id)
+        carts  = Cart.objects.filter(user=user)
         result = []
         
         for cart in carts:
@@ -53,6 +52,7 @@ class CartView(View):
             
             result.append(
                 {
+                    'cart_id'       : cart.id,
                     'product_id'    : product.id,
                     'product_name'  : product.name,
                     'product_number': product.product_number,
@@ -64,4 +64,9 @@ class CartView(View):
             )
         return JsonResponse({'resutl': result}, status=200)
 
-# def delete 는 body가 없어서 path와 queryparameter 중에 선택해야 함
+    # @login_decorator
+    def delete(self, request, cart_id):
+        user = request.user
+        cart = Cart.objects.get(pk=cart_id)
+        cart.delete()
+        return JsonResponse({'message': 'NO_CONTENT'}, status=204)
