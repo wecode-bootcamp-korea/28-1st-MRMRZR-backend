@@ -10,7 +10,6 @@ from products.models import ProductOption
 class CartView(View):
     def post(self, request):
         try:
-            # user = request.user    유저에게 토큰 전달한것 인증되면 활성화해서 테스트
             data       = json.loads(request.body)
             user       = request.user
             product_id = data['product_id']
