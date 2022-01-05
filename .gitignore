@@ -363,6 +363,8 @@ zsdoc/data
 
 my_settings.py
 
-csv/
+mrmrzara-DB/
+db_uploader.py
 
+csv/
 uploader.py
