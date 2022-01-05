@@ -31,7 +31,7 @@ class ProductListView(View):
             'price'         : product.price,
             'is_new'        : product.is_new,
             "images"        : [image.url for image in product.productimage_set.all()],
-            "sizes"         : [{'size_id' : size.id, 'size_name' : size.name} for size in product.sizes.all()]
+            "sizes"         : [size.name for size in product.productoption_set.all()]
         } for product in products#[offset:limit]
         ]
         results = {
@@ -41,17 +41,6 @@ class ProductListView(View):
         return JsonResponse({"results" : results}, status = 200)
 
 """
-
-
-size_name -> size로 수정 요청
-
-size_id 값은 받을 필요 없음
-
-
-@@@@
-
-
-
 order by ( 정렬 ) = 가격순
 
 django queryset slicing 
