@@ -4,19 +4,19 @@ from json.decoder import JSONDecodeError
 from django.http.response import JsonResponse
 from django.views         import View
 
-from users.utils     import LogInDecorator
+from users.utils     import login_decorator
 from carts.models    import Cart
 from products.models import ProductOption
 
 class CartView(View):
-    @LogInDecorator
+    @login_decorator
     def post(self, request):
         try:
             data       = json.loads(request.body)
             user       = request.user
             product_id = data['product_id']
             size_id    = data['size_id']
-            quantity   = data['quantity']    # 값 추가할 경우 프론트에서 계산 후에 준 값으로 계산
+            quantity   = data['quantity']
             
             if not ProductOption.objects.filter(product_id=product_id, size_id=size_id).exists():
                 return JsonResponse({'ProductOption_DoesNotExist'}, status=404)
@@ -33,14 +33,13 @@ class CartView(View):
             )
             cart.quantity = quantity
             cart.save()
-            
             return JsonResponse({'message': 'SUCCESS'}, status=201)   
         except KeyError:
             return JsonResponse({'message': 'KeyError'}, status=400)
         except JSONDecodeError:
             return JsonResponse({'message': 'JSONDecodeError'}, status=400)
 
-    @LogInDecorator
+    @login_decorator
     def get(self, request):
         user   = request.user
         carts  = Cart.objects.filter(user=user)
@@ -62,9 +61,9 @@ class CartView(View):
                     'quantity'      : cart.quantity
                 }
             )
-        return JsonResponse({'resutl': result}, status=200)
+        return JsonResponse({'result': result}, status=200)
 
-    @LogInDecorator
+    @login_decorator
     def delete(self, request, cart_id):
         try:
             user = request.user
