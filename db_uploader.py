@@ -93,9 +93,3 @@ def images():
                     product = product,
                     url = url[i]
                 )
-        
-#category()
-#item()
-#product()
-#options()
-#images()

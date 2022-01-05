@@ -3,7 +3,7 @@ import json
 from django.http  import JsonResponse
 from django.views import View
 
-from products.models import Product
+from products.models import Product, ProductOption
 
 class ProductDetailView(View):
     def get(self, request, product_id):
@@ -11,9 +11,11 @@ class ProductDetailView(View):
             return JsonResponse({'message' : 'DOES NOT EXIST'}, status=404)
         
         product = Product.objects.get(id = product_id)
-        #images  = [image.url for image in product.productimage_set.all()]
-        images = [{'image_id' : product_image.id, 'image_url' : product_image.url} for product_image in product.productimage_set.all()]
-        sizes   = [{'size_id' : size.id, 'size_name' : size.name} for size in product.sizes.all()]
+        images  = [{'image_id' : product_image.id, 'image_url' : product_image.url} for product_image in product.productimage_set.all()]
+        sizes   = [{
+            'size_id' : option.size.id, 
+            'size_name' : option.size.name,
+            'size_stock' : option.stock} for option in product.productoption_set.all()]
         
         result = {
             'id'             : product.id,
