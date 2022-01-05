@@ -13,7 +13,7 @@ class CartView(View):
         try:
             # user = request.user    유저에게 토큰 전달한것 인증되면 활성화해서 테스트
             data       = json.loads(request.body)
-            user       = User.objects.get(id=1)
+            user       = request.user
             product_id = data['product_id']
             size_id    = data['size_id']
             quantity   = data['quantity']    # 값 추가할 경우 프론트에서 계산 후에 준 값으로 계산
