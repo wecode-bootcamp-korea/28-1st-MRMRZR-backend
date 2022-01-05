@@ -4,7 +4,6 @@ from json.decoder import JSONDecodeError
 from django.http.response import JsonResponse
 from django.views         import View
 
-from users.models    import User
 from carts.models    import Cart
 from products.models import ProductOption
 
