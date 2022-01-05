@@ -66,7 +66,10 @@ class CartView(View):
 
     @LogInDecorator
     def delete(self, request, cart_id):
-        user = request.user
-        cart = Cart.objects.get(pk=cart_id)
-        cart.delete()
-        return JsonResponse({'message': 'NO_CONTENT'}, status=204)
+        try:
+            user = request.user
+            cart = Cart.objects.get(pk=cart_id, user=user)
+            cart.delete()
+            return JsonResponse({'message': 'NO_CONTENT'}, status=204)
+        except Cart.DoesNotExist:
+            return JsonResponse({'message': 'Cart.DoesNotExist'}, status=404)
