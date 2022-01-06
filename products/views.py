@@ -1,7 +1,8 @@
 import json
 
-from django.http  import JsonResponse
-from django.views import View
+from django.http      import JsonResponse
+from django.views     import View
+from django.db.models import Q
 
 from products.models import Product, ProductOption
 
@@ -65,8 +66,7 @@ class ProductListView(View):
                 'is_new'        : product.is_new,
                 'item'          : product.item.name,
                 "image"         : [image.url for image in product.productimage_set.all()]
-            } for product in Product.objects.filter(q).distinct().order_by(sort_set[sort])[offset:offset+limit]
-            ]
+            } for product in Product.objects.filter(q).distinct().order_by(sort_set[sort])[offset:offset+limit]]
             return JsonResponse({"results" : results}, status = 200)
         except KeyError:
             return JsonResponse({"message" : "KEY ERROR"}, status=400)
