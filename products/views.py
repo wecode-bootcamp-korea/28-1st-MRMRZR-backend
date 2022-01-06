@@ -9,14 +9,14 @@ class ProductDetailView(View):
     def get(self, request, product_id):
         if not Product.objects.filter(id = product_id).exists():
             return JsonResponse({'message' : 'DOES NOT EXIST'}, status=404)
-        
+
         product = Product.objects.get(id = product_id)
         images  = [{'image_id' : product_image.id, 'image_url' : product_image.url} for product_image in product.productimage_set.all()]
         sizes   = [{
-            'size_id' : option.size.id, 
+            'size_id' : option.size.id,
             'size_name' : option.size.name,
             'size_stock' : option.stock} for option in product.productoption_set.all()]
-        
+
         result = {
             'id'             : product.id,
             'name'           : product.name,
@@ -26,8 +26,8 @@ class ProductDetailView(View):
             'is_new'         : product.is_new,
             'image_urls'     : images,
             'sizes'          : sizes
-        }               
-            
+        }
+
         return JsonResponse({'results' : result}, status = 200)
 
 class ProductListView(View):
@@ -67,4 +67,4 @@ class ProductListView(View):
                 "image"         : [image.url for image in product.productimage_set.all()]
             } for product in Product.objects.filter(q).distinct().order_by(sort_set[sort])[offset:offset+limit]
             ]
-            return JsonResponse({"results" : results}, status = 200)
+            return JsonResponse({"results" : results}, status = 200) 
