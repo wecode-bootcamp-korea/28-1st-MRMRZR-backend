@@ -56,8 +56,8 @@ class CartView(View):
                     'product_name'  : product.name,
                     'product_number': product.product_number,
                     'price'         : int(product.price),
-                    'size'          : cart.products_options.size.name,
-                    'image_url'     : image.url,
+                    'sizes'         : cart.products_options.size.name,
+                    'image_urls'    : image.url,
                     'quantity'      : cart.quantity
                 }
             )

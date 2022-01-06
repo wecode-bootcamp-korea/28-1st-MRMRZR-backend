@@ -4,7 +4,7 @@ from django.http      import JsonResponse
 from django.views     import View
 from django.db.models import Q
 
-from products.models import Product, ProductOption
+from products.models import Product
 
 class ProductDetailView(View):
     def get(self, request, product_id):
@@ -19,8 +19,8 @@ class ProductDetailView(View):
             'size_stock' : option.stock} for option in product.productoption_set.all()]
 
         result = {
-            'id'             : product.id,
-            'name'           : product.name,
+            'product_id'     : product.id,
+            'product_name'   : product.name,
             'product_number' : product.product_number,
             'description'    : product.description,
             'price'          : int(product.price),
@@ -60,12 +60,12 @@ class ProductListView(View):
 
             results = [{
                 'product_id'    : product.id,
-                'name'          : product.name,
+                'product_name'  : product.name,
                 'product_number': product.product_number,
                 'price'         : int(product.price),
                 'is_new'        : product.is_new,
                 'item'          : product.item.name,
-                "image"         : [image.url for image in product.productimage_set.all()]
+                "image_urls"    : product.productimage_set.all().first().url
             } for product in Product.objects.filter(q).distinct().order_by(sort_set[sort])[offset:offset+limit]]
             return JsonResponse({"results" : results}, status = 200)
         except KeyError:
