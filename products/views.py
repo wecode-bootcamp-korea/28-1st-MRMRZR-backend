@@ -67,4 +67,6 @@ class ProductListView(View):
                 "image"         : [image.url for image in product.productimage_set.all()]
             } for product in Product.objects.filter(q).distinct().order_by(sort_set[sort])[offset:offset+limit]
             ]
-            return JsonResponse({"results" : results}, status = 200) 
+            return JsonResponse({"results" : results}, status = 200)
+        except KeyError:
+            return JsonResponse({"message" : "KEY ERROR"}, status=400)
