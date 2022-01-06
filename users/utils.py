@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from users.models           import User
 from my_settings            import SECRET_KEY, ALGORITHM
 
-def LogInDecorator(func):
+def login_decorator(func):
     def wrapper(self, request, *args, **kwargs):
         try:
             if not request.headers.get('Authorization'):
