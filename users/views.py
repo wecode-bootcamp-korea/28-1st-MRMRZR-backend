@@ -32,7 +32,7 @@ class UserSignUpView(View):
             )
             return JsonResponse({'result': 'CREATED'}, status=201)   
         except KeyError:
-            return JsonResponse({'message': 'KEYERROR'}, status=400)
+            return JsonResponse({'message': 'KEY ERROR'}, status=400)
         except JSONDecodeError:
             return JsonResponse({'message': 'JSONDecodeError'}, status=404)
         
@@ -55,7 +55,7 @@ class UserLogInView(View):
             }
             return JsonResponse({'result': result}, status=200)
         except KeyError:
-            return JsonResponse({'message': 'KEYERROR'}, status=400)
+            return JsonResponse({'message': 'KEY ERROR'}, status=400)
         except JSONDecodeError:
             return JsonResponse({'message': 'JSONDecodeError'}, status=400)
         except User.DoesNotExist:
