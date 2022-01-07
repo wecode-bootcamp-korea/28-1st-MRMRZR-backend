@@ -4,7 +4,7 @@ from django.http            import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 from users.models           import User
-from settings               import SECRET_KEY, ALGORITHM
+from mrmrzara.settings               import SECRET_KEY, ALGORITHM
 
 def login_decorator(func):
     def wrapper(self, request, *args, **kwargs):
