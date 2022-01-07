@@ -69,6 +69,6 @@ class CartView(View):
             user = request.user
             cart = Cart.objects.get(pk=cart_id, user=user)
             cart.delete()
-            return JsonResponse({'message': 'NO_CONTENT'}, status=204)
+            return JsonResponse({'message': 'NO_CONTENT'}, status=200)
         except Cart.DoesNotExist:
             return JsonResponse({'message': 'Cart.DoesNotExist'}, status=404)
