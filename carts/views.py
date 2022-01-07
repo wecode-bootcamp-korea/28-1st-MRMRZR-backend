@@ -17,6 +17,7 @@ class CartView(View):
             product_id = data['product_id']
             size_id    = data['size_id']
             quantity   = data['quantity']
+            print(data)
             
             if not ProductOption.objects.filter(product_id=product_id, size_id=size_id).exists():
                 return JsonResponse({'ProductOption_DoesNotExist'}, status=404)
@@ -56,7 +57,7 @@ class CartView(View):
                     'product_name'  : product.name,
                     'product_number': product.product_number,
                     'price'         : int(product.price),
-                    'sizes'         : cart.products_options.size.name,
+                    'size_id'       : cart.products_options.size.id,
                     'image_urls'    : image.url,
                     'quantity'      : cart.quantity
                 }
