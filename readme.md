@@ -19,13 +19,11 @@
 ## Demo
 
 > 회원가입 및 로그인 영상
-{% include video id="R29AJkFlXJE" provider="youtube" %}
-[![회원가입 및 로그인 영상](https://www.youtube.com/embed/R29AJkFlXJE/0.jpg)](https://www.youtube.com/embed/R29AJkFlXJE?t=0s)
-<iframe width="860" height="461" src="https://www.youtube.com/embed/R29AJkFlXJE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![회원가입 및 로그인 영상](https://youtu.be/R29AJkFlXJE)]
+
 
 > 제품 리스트 뷰, 상세페이지, 장바구니 앱 영상
-{% include video id="TwTx48PnCc0" provider="youtube" %}
-<iframe width="860" height="461" src="https://www.youtube.com/embed/TwTx48PnCc0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![제품 리스트 뷰, 상세페이지, 장바구니 앱 영상](https://youtu.be/TwTx48PnCc0)]
 
 
 ## DB modeling
