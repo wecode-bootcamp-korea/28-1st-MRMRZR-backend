@@ -19,11 +19,10 @@
 ## Demo
 
 > 회원가입 및 로그인 영상
-[![회원가입 및 로그인 영상](https://youtu.be/R29AJkFlXJE)]
-
+[![회원가입 및 로그인 영상](https://youtu.be/R29AJkFlXJE?list=PLIT4ViYX2bfhXm4Ia6TIfcTpih7-Ch1PT/0.jpg)](https://youtu.be/R29AJkFlXJE?list=PLIT4ViYX2bfhXm4Ia6TIfcTpih7-Ch1PT)
 
 > 제품 리스트 뷰, 상세페이지, 장바구니 앱 영상
-[![제품 리스트 뷰, 상세페이지, 장바구니 앱 영상](https://youtu.be/TwTx48PnCc0)]
+[![제품 리스트 뷰, 상세페이지, 장바구니 앱 영상](https://youtu.be/TwTx48PnCc0?list=PLIT4ViYX2bfhXm4Ia6TIfcTpih7-Ch1PT/0.jpg)](https://youtu.be/TwTx48PnCc0?list=PLIT4ViYX2bfhXm4Ia6TIfcTpih7-Ch1PT)
 
 
 ## DB modeling
