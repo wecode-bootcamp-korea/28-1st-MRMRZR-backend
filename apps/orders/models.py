@@ -2,8 +2,8 @@ import uuid
 
 from django.db import models
 
-from products.models import ProductOption
-from users.models    import User
+from ..products.models import ProductOption
+from ..users.models    import User
 
 class OrderStatus(models.Model):
     status = models.CharField(max_length=20)

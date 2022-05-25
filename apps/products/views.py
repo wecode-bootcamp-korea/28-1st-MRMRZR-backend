@@ -1,10 +1,9 @@
-import json
-
 from django.http      import JsonResponse
 from django.views     import View
 from django.db.models import Q
 
-from products.models import Product
+from .models import Product
+
 
 class ProductDetailView(View):
     def get(self, request, product_id):
@@ -30,6 +29,7 @@ class ProductDetailView(View):
         }
 
         return JsonResponse({'results' : result}, status = 200)
+
 
 class ProductListView(View):
     def get(self, request):

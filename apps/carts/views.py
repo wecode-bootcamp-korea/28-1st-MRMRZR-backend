@@ -4,9 +4,10 @@ from json.decoder import JSONDecodeError
 from django.http.response import JsonResponse
 from django.views         import View
 
-from users.utils     import login_decorator
-from carts.models    import Cart
-from products.models import ProductOption
+from ..users.utils     import login_decorator
+from .models           import Cart
+from ..products.models import ProductOption
+
 
 class CartView(View):
     @login_decorator
@@ -17,7 +18,6 @@ class CartView(View):
             product_id = data['product_id']
             size_id    = data['size_id']
             quantity   = data['quantity']
-            print(data)
             
             if not ProductOption.objects.filter(product_id=product_id, size_id=size_id).exists():
                 return JsonResponse({'ProductOption_DoesNotExist'}, status=404)
@@ -39,6 +39,7 @@ class CartView(View):
             return JsonResponse({'message': 'KEY ERROR'}, status=400)
         except JSONDecodeError:
             return JsonResponse({'message': 'JSONDecodeError'}, status=400)
+
 
     @login_decorator
     def get(self, request):
@@ -63,6 +64,7 @@ class CartView(View):
                 }
             )
         return JsonResponse({'result': result}, status=200)
+
 
     @login_decorator
     def delete(self, request, cart_id):

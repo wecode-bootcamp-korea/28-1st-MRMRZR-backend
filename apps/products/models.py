@@ -1,10 +1,12 @@
 from django.db import models
 
+
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    
+
     class Meta:
         db_table = 'categories'
+
 
 class Item(models.Model):
     name     = models.CharField(max_length=50)
@@ -13,11 +15,13 @@ class Item(models.Model):
     class Meta:
         db_table = 'items'
 
+
 class Size(models.Model):
     name = models.CharField(max_length=10)
 
     class Meta:
         db_table = 'sizes'
+
 
 class Product(models.Model):
     name           = models.CharField(max_length=50)
@@ -31,12 +35,14 @@ class Product(models.Model):
     class Meta:
         db_table = 'products'
 
+
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     url     = models.CharField(max_length=16000)
 
     class Meta:
         db_table = 'products_images'
+
 
 class ProductOption(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
